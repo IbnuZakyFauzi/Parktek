@@ -12,9 +12,10 @@ exports.authenticateJWT = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        req.user = { id: decoded.userId }; // Changed from decoded.id to decoded.userId
         next();
     } catch (err) {
+        console.error("JWT verification error:", err);
         return res.status(403).json({ message: "Forbidden: Invalid or expired token" });
     }
 };

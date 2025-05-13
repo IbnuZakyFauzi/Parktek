@@ -25,6 +25,19 @@ exports.addBooking = async (booking) => {
     }
 }
 
+exports.createBooking = async (user_id, parking_slot_id, start_time, end_time) => {
+    const status = 'pending';
+    try {
+        const result = await db.query(
+            "INSERT INTO bookings (user_id, slot_id, start_time, end_time, status) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [user_id, parking_slot_id, start_time, end_time, status]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error creating booking", error);
+        throw error;
+    }
+}
 
 exports.updateBooking = async (id, booking) => {
     const { user_id, parking_slot_id, start_time, end_time, status } = booking;
