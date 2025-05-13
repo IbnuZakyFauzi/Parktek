@@ -128,3 +128,60 @@ exports.completeBooking = async (id) => {
         throw error;
     }
 }
+
+exports.createBookingByLocation = async (user_id, location, type, start_time, end_time) => {
+    try {
+        // Get available slots at the location for the time period
+        let query = "SELECT * FROM parking_slots WHERE location ILIKE $1";
+        const queryParams = [`%${location}%`];
+        
+        if (type) {
+            query += " AND type = $2";
+            queryParams.push(type);
+        }
+        
+        query += " AND is_active = true";
+        
+        const result = await db.query(query, queryParams);
+        const availableSlots = result.rows;
+        
+        if (availableSlots.length === 0) {
+            return { success: false, message: `No available parking slots found at location "${location}"` };
+        }
+        
+        // Check each slot for availability during the requested time
+        let selectedSlot = null;
+        
+        for (const slot of availableSlots) {
+            const overlappingBookingsResult = await db.query(
+                "SELECT * FROM bookings WHERE slot_id = $1 AND status != 'cancelled' AND ((start_time <= $2 AND end_time > $2) OR (start_time < $3 AND end_time >= $3) OR (start_time >= $2 AND end_time <= $3))",
+                [slot.id, start_time, end_time]
+            );
+            
+            if (overlappingBookingsResult.rows.length === 0) {
+                selectedSlot = slot;
+                break;
+            }
+        }
+        
+        if (!selectedSlot) {
+            return { success: false, message: `All parking slots at location "${location}" are booked for the selected time` };
+        }
+        
+        // Create the booking with the selected slot
+        const status = 'pending';
+        const bookingResult = await db.query(
+            "INSERT INTO bookings (user_id, slot_id, start_time, end_time, status) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [user_id, selectedSlot.id, start_time, end_time, status]
+        );
+        
+        return { 
+            success: true, 
+            booking: bookingResult.rows[0],
+            parking_slot: selectedSlot
+        };
+    } catch (error) {
+        console.error("Error creating booking by location", error);
+        throw error;
+    }
+}

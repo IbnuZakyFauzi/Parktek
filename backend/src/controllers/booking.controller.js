@@ -126,3 +126,37 @@ exports.getUserBookings = async (req, res) => {
     }
 }
 
+exports.createBookingByLocation = async (req, res) => {
+    const user_id = req.user.id;
+    const { location, type, start_time, end_time } = req.body;
+
+    if (!location || !start_time || !end_time) {
+        return res.status(400).json(baseResponse.error("Location, start time, and end time are required"));
+    }
+
+    try {
+        const result = await bookingRepo.createBookingByLocation(
+            user_id, 
+            location, 
+            type, 
+            start_time, 
+            end_time
+        );
+        
+        if (!result.success) {
+            return res.status(404).json(baseResponse.error(result.message));
+        }
+        
+        return res.status(201).json(baseResponse.success(
+            "Booking created successfully", 
+            {
+                ...result.booking,
+                parking_slot: result.parking_slot
+            }
+        ));
+    } catch (error) {
+        console.error("Error creating booking by location", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+}
+

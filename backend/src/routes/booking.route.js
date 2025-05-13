@@ -11,5 +11,6 @@ router.get('/:id', authMiddleware.authenticateJWT, bookingController.getBookingB
 router.get('/user/:id', bookingController.getBookingbyUserId);
 router.post('/cancel/:id', authMiddleware.authenticateJWT, bookingController.cancelBooking);
 // router.get('/user/:id', authMiddleware.authenticateJWT, bookingController.getBookingbyUserId);
+router.post('/create-by-location', authMiddleware.authenticateJWT, bookingController.createBookingByLocation);
 
 module.exports = router;

@@ -204,3 +204,31 @@ exports.getParkingSlotsByLocation = async (req, res) => {
         return res.status(500).json(baseResponse.error("Internal server error"));
     }
 }
+
+exports.getAvailableParkingSlotsByLocation = async (req, res) => {
+    const { location, start_time, end_time } = req.query;
+
+    if (!location || !start_time || !end_time) {
+        return res.status(400).json(baseResponse.error("Location, start time, and end time are required"));
+    }
+
+    try {
+        const availableSlots = await parkingSlotRepo.getAvailableParkingSlotsByLocation(
+            location, 
+            start_time, 
+            end_time
+        );
+        
+        if (availableSlots.length === 0) {
+            return res.status(404).json(baseResponse.error("No available parking slots found at this location"));
+        }
+
+        return res.status(200).json(baseResponse.success(
+            `Available parking slots at location "${location}" fetched successfully`, 
+            availableSlots
+        ));
+    } catch (error) {
+        console.error("Error fetching available parking slots by location", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+}

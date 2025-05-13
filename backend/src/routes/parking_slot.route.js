@@ -11,5 +11,6 @@ router.get('/available', parkingSlotController.countAvailableParkingSlots);
 router.get('/:id', parkingSlotController.getParkingSlotById);
 router.get('/location/:location', parkingSlotController.getParkingSlotsByLocation);
 router.get('/type/:type', parkingSlotController.getParkingSlotsByType);
+router.get('/available-by-location', parkingSlotController.getAvailableParkingSlotsByLocation);
 
 module.exports = router;
