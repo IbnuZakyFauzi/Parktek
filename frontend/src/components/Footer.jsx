@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4">
           {/* Footer Content */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* PARKEE Section */}
+            {/* PARKTEK Section */}
             <div>
-              <h3 className="font-semibold text-lg">PARKEE</h3>
+              <h3 className="font-semibold text-lg">PARKTEK</h3>
               <ul>
                 <li><a href="#aboutus" className="text-white hover:text-color_hover1">About Us</a></li>
                 <li><a href="#promo" className="text-white hover:text-color_hover1">Promo</a></li>
@@ -23,10 +23,10 @@ const Footer = () => {
             <div>
               <h3 className="font-semibold text-lg">Products</h3>
               <ul>
-                <li><a href="#parkeeapp" className="text-white hover:text-color_hover1">PARKEE APP</a></li>
-                <li><a href="#parkeeos" className="text-white hover:text-color_hover1">PARKEE OS</a></li>
+                <li><a href="#PARKTEKapp" className="text-white hover:text-color_hover1">PARKTEK APP</a></li>
+                <li><a href="#PARKTEKos" className="text-white hover:text-color_hover1">PARKTEK OS</a></li>
                 <li><a href="#onstreetparking" className="text-white hover:text-color_hover1">On Street Parking</a></li>
-                <li><a href="#ticketing" className="text-white hover:text-color_hover1">PARKEE Ticketing</a></li>
+                <li><a href="#ticketing" className="text-white hover:text-color_hover1">PARKTEK Ticketing</a></li>
               </ul>
             </div>
 
@@ -43,7 +43,7 @@ const Footer = () => {
             <div>
               <h3 className="font-semibold text-lg">Customer Service</h3>
               <ul>
-                <li><a href="mailto:cs@parkee.app" className="text-white hover:text-color_hover1">Email</a></li>
+                <li><a href="mailto:cs@PARKTEK.app" className="text-white hover:text-color_hover1">Email</a></li>
                 <li><a href="#whatsapp" className="text-white hover:text-color_hover1">WhatsApp</a></li>
                 <li><a href="#contact" className="text-white hover:text-color_hover1">Contact Us</a></li>
                 <li><a href="#faq" className="text-white hover:text-color_hover1">FAQ</a></li>
@@ -58,7 +58,7 @@ const Footer = () => {
               <a href="https://linkedin.com" className="text-white">L</a>
               <a href="https://instagram.com" className="text-white">I</a>
             </div>
-            <div className="text-sm text-center sm:text-left">© 2023 PARKEE | PARKEE is a trademark of PT. INOVASI ANAK INDONESIA</div>
+            <div className="text-sm text-center sm:text-left">© 2023 PARKTEK | PARKTEK is a trademark of PT. INOVASI ANAK INDONESIA</div>
           </div>
         </div>
       </footer>
