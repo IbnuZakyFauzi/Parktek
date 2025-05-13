@@ -1,23 +1,69 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Root container styling */
 #root {
-  max-width: 1280px;
+  width: 100%; /* Ubah dari max-width ke width */
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
+/* Logo styling */
 .logo {
-  height: 6em;
+  height: auto;
+  max-width: 100%; /* Pastikan logo tidak melebihi kontainer */
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* Navbar and Footer adjustments */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2vw; /* Gunakan unit responsif */
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 2vh 5vw; /* Gunakan unit responsif */
+  text-align: center;
+}
+
+/* Card styling */
+.card {
+  padding: 2vw; /* Gunakan unit responsif */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Read the docs link */
+.read-the-docs {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+/* Keyframes for logo spin animation */
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -33,10 +79,40 @@
   }
 }
 
-.card {
-  padding: 2em;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .logo {
+    height: 4em;
+  }
+
+  .card {
+    padding: 1.5em;
+  }
+
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+
+  .footer {
+    padding: 0.5rem 1rem;
+  }
 }
 
-.read-the-docs {
-  color: #888;
+@media (min-width: 1920px) {
+  .navbar, .footer {
+    padding: 1rem 10vw; /* Tambahkan padding lebih besar untuk layar lebar */
+  }
+
+  .card {
+    padding: 3rem;
+  }
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden; /* Mencegah scroll horizontal */
 }
