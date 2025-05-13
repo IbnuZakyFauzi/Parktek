@@ -9,6 +9,7 @@ export default {
       colors: {
         'color_hover1' : '#e15f2b',
         'color_background' : '#eceff4',
+        'color_blue1' : '#004f99',
       },
       fontSize: {
         '3xl': '1.875rem',

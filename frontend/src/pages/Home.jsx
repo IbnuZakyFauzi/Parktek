@@ -1,0 +1,72 @@
+import React from 'react';
+
+const Home = () => {
+  return (
+    <div className="max-w-7xl mx-auto py-12 px-6">
+      <div className="text-center mb-12">
+        <h2 className="text-3xl font-semibold text-gray-800">Kenapa pakai PARKTEK?</h2>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div className="text-center">
+          <div className="text-4xl text-red-500 mb-4">
+            <i className="fas fa-tachometer-alt"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Faster</h3>
+          <p className="text-gray-600">Faster payment authorization takes a few seconds</p>
+        </div>
+
+        <div className="text-center">
+          <div className="text-4xl text-yellow-500 mb-4">
+            <i className="fas fa-credit-card"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Various Payment Methods</h3>
+          <p className="text-gray-600">Various payment systems are available: e-money cards, QRIS, and e-wallets</p>
+        </div>
+
+        <div className="text-center">
+          <div className="text-4xl text-blue-500 mb-4">
+            <i className="fas fa-chart-line"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Digital Dashboard</h3>
+          <p className="text-gray-600">Comprehensive digital financial reports</p>
+        </div>
+
+        <div className="text-center">
+          <div className="text-4xl text-green-500 mb-4">
+            <i className="fas fa-users-cog"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Competent IT Support</h3>
+          <p className="text-gray-600">Competent and experienced IT support team in the parking industry</p>
+        </div>
+
+        <div className="text-center">
+          <div className="text-4xl text-purple-500 mb-4">
+            <i className="fas fa-lock"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">More Secure</h3>
+          <p className="text-gray-600">Prevent vehicle theft with PARKEE App verification</p>
+        </div>
+
+        <div className="text-center">
+          <div className="text-4xl text-orange-500 mb-4">
+            <i className="fas fa-parking"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Manless Parking System</h3>
+          <p className="text-gray-600">Parking location supervision with technology</p>
+        </div>
+      </div>
+
+      <div className="text-center mt-8">
+        <a
+          href="#"
+          className="inline-block bg-color_blue1 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-red-600 transition"
+        >
+          Learn PARKTEK
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
