@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full min-h-screen">
       <div className="flex-grow"></div>
 
-      <footer className="w-screen bg-color_blue1 text-white py-8 ">
+      <footer className="bg-color_blue1 text-white py-8 w-full">
         <div className="max-w-7xl mx-auto px-4">
           {/* Footer Content */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
