@@ -15,12 +15,33 @@ exports.getAllParkingSlots = async (req, res) => {
 exports.addParkingSlot = async (req, res) => {
     const { location, type, is_active } = req.body;
 
-    if (!location || !type || is_active === undefined) {
-        return res.status(400).json(baseResponse.error("All fields are required"));
+    if (!location || !type) {
+        return res.status(400).json(baseResponse.error("Location and type are required"));
     }
 
     try {
-        const newParkingSlot = await parkingSlotRepo.addParkingSlot({ location, type, is_active });
+        // Proper boolean conversion
+        let isActiveBoolean;
+        
+        if (is_active === undefined || is_active === "") {
+            isActiveBoolean = true;  // Default to true if not provided
+        } else {
+            // Convert various string/boolean/number representations to boolean
+            isActiveBoolean = is_active === true || 
+                             is_active === "true" || 
+                             is_active === "1" || 
+                             is_active === 1;
+        }
+        
+        console.log("Input is_active:", is_active);
+        console.log("Converted isActiveBoolean:", isActiveBoolean);
+        
+        const newParkingSlot = await parkingSlotRepo.addParkingSlot({ 
+            location, 
+            type, 
+            is_active: isActiveBoolean 
+        });
+        
         return res.status(201).json(baseResponse.success("Parking slot added successfully", newParkingSlot));
     } catch (error) {
         console.error("Error adding parking slot", error);
@@ -32,8 +53,8 @@ exports.updateParkingSlot = async (req, res) => {
     const { id } = req.params;
     const { location, type, is_active } = req.body;
 
-    if (!location || !type || is_active === undefined) {
-        return res.status(400).json(baseResponse.error("All fields are required"));
+    if (!location || !type) {
+        return res.status(400).json(baseResponse.error("Location and type are required"));
     }
 
     try {
@@ -42,7 +63,28 @@ exports.updateParkingSlot = async (req, res) => {
             return res.status(404).json(baseResponse.error("Parking slot not found"));
         }
 
-        const updatedParkingSlot = await parkingSlotRepo.updateParkingSlot(id, { location, type, is_active });
+        // Proper boolean conversion
+        let isActiveBoolean;
+        
+        if (is_active === undefined || is_active === "") {
+            isActiveBoolean = parkingSlot.is_active;  // Keep existing value if not provided
+        } else {
+            // Convert various string/boolean/number representations to boolean
+            isActiveBoolean = is_active === true || 
+                             is_active === "true" || 
+                             is_active === "1" || 
+                             is_active === 1;
+        }
+        
+        console.log("Input is_active:", is_active);
+        console.log("Converted isActiveBoolean:", isActiveBoolean);
+        
+        const updatedParkingSlot = await parkingSlotRepo.updateParkingSlot(id, { 
+            location, 
+            type, 
+            is_active: isActiveBoolean 
+        });
+        
         return res.status(200).json(baseResponse.success("Parking slot updated successfully", updatedParkingSlot));
     } catch (error) {
         console.error("Error updating parking slot", error);
@@ -129,6 +171,36 @@ exports.checkParkingSlotAvailability = async (req, res) => {
         return res.status(200).json(baseResponse.success("Parking slot is available", { available: true }));
     } catch (error) {
         console.error("Error checking parking slot availability", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+}
+
+exports.getParkingSlotsByType = async (req, res) => {
+    const { type } = req.params;
+
+    try {
+        const parkingSlots = await parkingSlotRepo.getParkingSlotsByType(type);
+        if (parkingSlots.length === 0) {
+            return res.status(404).json(baseResponse.error("No parking slots found for this type"));
+        }
+        return res.status(200).json(baseResponse.success("Parking slots fetched successfully", parkingSlots));
+    } catch (error) {
+        console.error("Error fetching parking slots by type", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+}
+
+exports.getParkingSlotsByLocation = async (req, res) => {
+    const { location } = req.params;
+
+    try {
+        const parkingSlots = await parkingSlotRepo.getParkingSlotsByLocation(location);
+        if (parkingSlots.length === 0) {
+            return res.status(404).json(baseResponse.error("No parking slots found for this location"));
+        }
+        return res.status(200).json(baseResponse.success("Parking slots fetched successfully", parkingSlots));
+    } catch (error) {
+        console.error("Error fetching parking slots by location", error);
         return res.status(500).json(baseResponse.error("Internal server error"));
     }
 }

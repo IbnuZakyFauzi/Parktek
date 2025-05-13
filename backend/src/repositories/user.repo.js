@@ -37,12 +37,12 @@ exports.deleteUser = async (id) => {
     }
 }
 
-exports.updateUser = async (id, users) => {
-    const { username, email, password } = users;
+exports.updateUser = async (id, user) => {
+    const { name, email, password } = user;
     try {
         const result = await db.query(
-            "UPDATE users SET username = $1, email = $2, password = $3 WHERE id = $4 RETURNING *",
-            [username, email, password, id]
+            "UPDATE users SET name = $1, email = $2, password_hash = $3 WHERE id = $4 RETURNING *",
+            [name, email, password, id]
         );
         return result.rows[0];
     } catch (error) {
@@ -63,7 +63,9 @@ exports.getAllUsers = async () => {
 
 exports.getUserById = async (id) => {
     try {
+        console.log("Repository - getting user with ID:", id);
         const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+        console.log("Repository - query result:", result.rows);
         return result.rows[0];
     } catch (error) {
         console.error("Error fetching user by ID", error);

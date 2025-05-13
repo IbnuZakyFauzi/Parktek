@@ -88,3 +88,12 @@ exports.getParkingSlotsByType = async (type) => {
     }
 }
 
+exports.getParkingSlotsByLocation = async (location) => {
+    try {
+        const result = await db.query("SELECT * FROM parking_slots WHERE location = $1", [location]);
+        return result.rows;
+    } catch (error) {
+        console.error("Error fetching parking slots by location", error);
+        throw error;
+    }
+}

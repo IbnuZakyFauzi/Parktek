@@ -16,14 +16,13 @@ function App() {
         <NavBar />
         
         <div className="flex-grow pt-12 "> 
-          {/* Define the routes for different pages */}
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/locations" element={<Locations />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            {/* Add more routes here */}
           </Routes>
         </div>
         

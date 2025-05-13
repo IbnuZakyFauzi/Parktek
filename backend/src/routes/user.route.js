@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
-// router.get('/logout', authMiddleware.authenticateJWT, userController.logoutUser);
+router.get('/logout', authMiddleware.authenticateJWT, userController.logoutUser);
 router.get('/profile', authMiddleware.authenticateJWT, userController.getProfile);
 router.get('/all', userController.getAllUsers);
-router.delete('/delete/:id', authMiddleware.authenticateJWT, userController.deleteUser);
+router.delete('/delete/:id', userController.deleteUser);
 router.get('/:id', authMiddleware.authenticateJWT, userController.getUserById);
 router.put('/update/:id', authMiddleware.authenticateJWT, userController.updateUser);
 

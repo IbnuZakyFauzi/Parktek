@@ -138,19 +138,50 @@ exports.deleteUser = async (req, res) => {
 }
 
 exports.getProfile = async (req, res) => {
-    const userId = req.user.id; // Assuming user ID is available in req.user
+    console.log("User in request:", req.user);
+    const userId = req.user.id;
 
     try {
+        console.log("Looking up user with ID:", userId);
         const user = await userRepo.getUserById(userId);
+        console.log("User found:", user);
+        
         if (!user) {
             return res.status(404).json(baseResponse.error("User not found"));
         }
-        return res.status(200).json(baseResponse.success("User profile fetched successfully", user));
+        
+        // Don't send password hash to client
+        const { password_hash, ...userWithoutPassword } = user;
+        
+        return res.status(200).json(baseResponse.success("User profile fetched successfully", userWithoutPassword));
     } catch (error) {
         console.error("Error fetching user profile", error);
         return res.status(500).json(baseResponse.error("Internal server error"));
     }
 }
+
+exports.logoutUser = async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json(baseResponse.error("No token provided"));
+    }
+
+    try {
+        // Clear the cookie
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict"
+        });
+
+        return res.status(200).json(baseResponse.success("Logout successful"));
+    } catch (error) {
+        console.error("Error logging out user", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+}
+
+
 
 
 

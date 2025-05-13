@@ -9,7 +9,7 @@ router.put('/update/:id', authMiddleware.authenticateJWT, parkingSlotController.
 router.delete('/delete/:id', authMiddleware.authenticateJWT, parkingSlotController.deleteParkingSlot);
 router.get('/available', parkingSlotController.countAvailableParkingSlots);
 router.get('/:id', parkingSlotController.getParkingSlotById);
-// router.get('/location/:location', parkingSlotController.getParkingSlotByLocation);
-// router.get('/type/:type', parkingSlotController.getParkingSlotByType);
+router.get('/location/:location', parkingSlotController.getParkingSlotsByLocation);
+router.get('/type/:type', parkingSlotController.getParkingSlotsByType);
 
 module.exports = router;
