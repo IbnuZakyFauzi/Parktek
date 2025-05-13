@@ -7,7 +7,39 @@ const Home = () => {
         <h2 className="text-3xl font-semibold text-gray-800">Kenapa pakai PARKTEK?</h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
+      {/* New clickable content sections outside the grid */}
+      <div className="grid">
+        <div className="col-span-1 sm:col-span-2 lg:col-span-1 text-center bg-red-100 rounded-lg p-8 shadow-lg">
+          <div className="text-4xl text-red-500 mb-4">
+            <i className="fas fa-map-marker-alt"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Track Your Parking</h3>
+          <p className="text-gray-600">Real-time parking location updates on the go.</p>
+          <a
+            href="#track"
+            className="inline-block bg-color_blue1 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-red-600 transition"
+          >
+            Track Now
+          </a>
+        </div>
+
+        <div className="col-span-1 sm:col-span-2 lg:col-span-1 text-center bg-blue-100 rounded-lg p-8 shadow-lg">
+          <div className="text-4xl text-blue-500 mb-4">
+            <i className="fas fa-download"></i>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-800">Download the App</h3>
+          <p className="text-gray-600">Get the PARKEE App for a seamless experience.</p>
+          <a
+            href="#download"
+            className="inline-block bg-color_blue1 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-red-600 transition"
+          >
+            Download
+          </a>
+        </div>
+      </div>
+
+      {/* Original content sections */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-12">
         {/* Existing content sections */}
         <div className="text-center">
           <div className="text-4xl text-red-500 mb-4">
@@ -56,37 +88,9 @@ const Home = () => {
           <h3 className="text-xl font-semibold text-gray-800">Manless Parking System</h3>
           <p className="text-gray-600">Parking location supervision with technology</p>
         </div>
-
-        {/* New clickable content sections in a 2-column layout */}
-        <div className="col-span-1 sm:col-span-2 lg:col-span-1 text-center bg-red-100 rounded-lg p-8 shadow-lg">
-          <div className="text-4xl text-red-500 mb-4">
-            <i className="fas fa-map-marker-alt"></i>
-          </div>
-          <h3 className="text-xl font-semibold text-gray-800">Track Your Parking</h3>
-          <p className="text-gray-600">Real-time parking location updates on the go.</p>
-          <a
-            href="#track"
-            className="inline-block bg-color_blue1 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-red-600 transition"
-          >
-            Track Now
-          </a>
-        </div>
-
-        <div className="col-span-1 sm:col-span-2 lg:col-span-1 text-center bg-blue-100 rounded-lg p-8 shadow-lg">
-          <div className="text-4xl text-blue-500 mb-4">
-            <i className="fas fa-download"></i>
-          </div>
-          <h3 className="text-xl font-semibold text-gray-800">Download the App</h3>
-          <p className="text-gray-600">Get the PARKTEK App for a seamless experience.</p>
-          <a
-            href="#download"
-            className="inline-block bg-color_blue1 text-white py-2 px-6 rounded-full text-lg font-semibold hover:bg-red-600 transition"
-          >
-            Download
-          </a>
-        </div>
       </div>
 
+      {/* Learn more section */}
       <div className="text-center mt-8">
         <a
           href="#learn-more"
