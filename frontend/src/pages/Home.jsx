@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate(); // Hook untuk navigasi
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
       <div className="text-center mb-12">
@@ -15,6 +18,7 @@ const Home = () => {
           <p className="text-gray-600 text-center mb-6">Real-time parking location updates on the go.</p>
           <button
             className="bg-color_blue1 text-white py-2.5 px-8 rounded-full font-medium hover:bg-blue-700 transition duration-300 w-48"
+            onClick={() => navigate('/track-parking')} // Navigasi ke halaman TrackParking
           >
             Track Now
           </button>

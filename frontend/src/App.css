@@ -7,10 +7,10 @@
 
 /* Root container styling */
 #root {
-  width: 100%; /* Ubah dari max-width ke width */
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Logo styling */
@@ -43,10 +43,33 @@
 }
 
 .footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #333;
   color: white;
-  padding: 2vh 5vw; /* Gunakan unit responsif */
+  padding: 2vh 0; /* Hapus padding horizontal */
+  margin: 0;
   text-align: center;
+  width: 100%; /* Pastikan footer mengambil seluruh lebar layar */
+  box-sizing: border-box;
+}
+
+.footer ul,
+.footer li,
+.footer p {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* Card styling */
@@ -113,6 +136,9 @@
 }
 
 /* Prevent horizontal scroll */
-body {
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   overflow-x: hidden; /* Mencegah scroll horizontal */
 }

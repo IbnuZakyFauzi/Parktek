@@ -21,20 +21,28 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Customer Service Column */}
+          {/* Customer Service Section */}
           <div>
-            <h3 className="font-semibold text-xl mb-4">Customer Service</h3>
+            <h3 className="font-semibold text-lg">Customer Service</h3>
             <ul className="space-y-2">
-              <li><a href="mailto:cs@PARKTEK.app" className="text-white hover:text-color_hover1">Email</a></li>
+              <li><a href="mailto:cs@parkee.app" className="text-white hover:text-color_hover1">Email</a></li>
               <li><a href="#whatsapp" className="text-white hover:text-color_hover1">WhatsApp</a></li>
               <li><a href="#contact" className="text-white hover:text-color_hover1">Contact Us</a></li>
               <li><a href="#faq" className="text-white hover:text-color_hover1">FAQ</a></li>
             </ul>
           </div>
         </div>
-        
-        {/* Copyright */}
-        <div className="text-center mt-8">
+
+        {/* Social Media & Links */}
+        <div className="flex justify-between items-center mt-8">
+          <div className="flex space-x-4">
+            <a href="https://facebook.com" className="text-white">F</a>
+            <a href="https://linkedin.com" className="text-white">L</a>
+            <a href="https://instagram.com" className="text-white">I</a>
+          </div>
+          <div className="text-sm text-center sm:text-left">
+            © 2023 PARKEE | PARKEE is a trademark of PT. INOVASI ANAK INDONESIA
+          </div>
         </div>
       </div>
     </footer>

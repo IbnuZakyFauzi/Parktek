@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import AboutUs from './pages/AboutUs'; // Import AboutUs
 import Login from './pages/Login';
 import Register from './pages/Register';
+import TrackParking from './pages/TrackParking'; // Import halaman TrackParking
 import Footer from './components/Footer';
 
 function App() {
@@ -29,6 +30,15 @@ function App() {
               element={
                 <>
                   <AboutUs />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/track-parking"
+              element={
+                <>
+                  <TrackParking />
                   <Footer />
                 </>
               }
