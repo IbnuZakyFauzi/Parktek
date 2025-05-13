@@ -10,7 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 
-// Import routes
 app.use('/users', require('./src/routes/user.route'));
 app.use('/bookings', require('./src/routes/booking.route'));
 app.use('/slots', require('./src/routes/parking_slot.route'));
