@@ -1,10 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-import NavBar from './components/Navbar' 
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Footer from './components/Footer'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import NavBar from './components/Navbar';
+import Home from './pages/Home';
+import AboutUs from './pages/AboutUs'; // Import AboutUs
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -14,13 +15,25 @@ function App() {
         <main className="flex-grow">
           <Routes>
             {/* Routes with Footer */}
-            <Route path="/" element={
-              <>
-                <Home />
-                <Footer />
-              </>
-            } />
-            
+            <Route
+              path="/"
+              element={
+                <>
+                  <Home />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/aboutus"
+              element={
+                <>
+                  <AboutUs />
+                  <Footer />
+                </>
+              }
+            />
+
             {/* Routes without Footer */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -28,7 +41,7 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
