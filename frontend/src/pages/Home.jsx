@@ -3,12 +3,8 @@ import React from 'react';
 const Home = () => {
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-semibold text-gray-800">Kenapa pakai PARKTEK?</h2>
-      </div>
-
       {/* New clickable content sections outside the grid */}
-      <div className="grid">
+      <div className="grid gap-6">
         <div className="col-span-1 sm:col-span-2 lg:col-span-1 text-center bg-red-100 rounded-lg p-8 shadow-lg">
           <div className="text-4xl text-red-500 mb-4">
             <i className="fas fa-map-marker-alt"></i>
@@ -37,6 +33,9 @@ const Home = () => {
           </a>
         </div>
       </div>
+      <div className="text-center mb-12">
+      </div>
+        <h2 className="text-3xl font-semibold text-gray-800">Kenapa pakai PARKTEK?</h2>
 
       {/* Original content sections */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-12">

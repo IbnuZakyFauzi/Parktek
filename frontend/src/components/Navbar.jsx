@@ -13,7 +13,7 @@ export default function NavBar() {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white text-black py-0.1 shadow-md">
+        <nav className="fixed top-0 left-0 w-full z-50 bg-white text-black py-4 shadow-md">
             <div className="flex justify-between items-center px-3 py-1">
                 {/* Logo and Navbar Links on the Left */}
                 <div className="flex items-center space-x-6">
