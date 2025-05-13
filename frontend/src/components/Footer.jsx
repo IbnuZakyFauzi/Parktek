@@ -36,12 +36,6 @@ const Footer = () => {
         {/* Social Media & Links */}
         <div className="flex justify-between items-center mt-8">
           <div className="flex space-x-4">
-            <a href="https://facebook.com" className="text-white">F</a>
-            <a href="https://linkedin.com" className="text-white">L</a>
-            <a href="https://instagram.com" className="text-white">I</a>
-          </div>
-          <div className="text-sm text-center sm:text-left">
-            © 2023 PARKEE | PARKEE is a trademark of PT. INOVASI ANAK INDONESIA
           </div>
         </div>
       </div>

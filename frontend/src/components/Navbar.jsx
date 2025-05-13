@@ -14,19 +14,19 @@ export default function NavBar() {
           <ul className="flex flex-row space-x-6 font-medium text-xl">
             <li>
               <Link
-                to="/aboutus"
+                to="/location"
                 className="text-black hover:text-color_hover1 transition cursor-pointer"
               >
-                About Us
+                Location
               </Link>
             </li>
             <li>
-              <a
-                href="#locations"
+              <Link
+                to="/track-parking"
                 className="text-black hover:text-color_hover1 transition cursor-pointer"
               >
-                Locations
-              </a>
+                Track Parking
+              </Link>
             </li>
           </ul>
         </div>

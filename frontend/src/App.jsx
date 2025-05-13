@@ -2,10 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/Navbar';
 import Home from './pages/Home';
-import AboutUs from './pages/AboutUs'; // Import AboutUs
+import AboutUs from './pages/AboutUs';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import TrackParking from './pages/TrackParking'; // Import halaman TrackParking
+import TrackParking from './pages/TrackParking';
+import Location from './pages/Location'; // Import halaman Location
 import Footer from './components/Footer';
 
 function App() {
@@ -39,6 +40,15 @@ function App() {
               element={
                 <>
                   <TrackParking />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/location"
+              element={
+                <>
+                  <Location />
                   <Footer />
                 </>
               }
