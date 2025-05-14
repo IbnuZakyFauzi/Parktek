@@ -5,12 +5,13 @@ const router = express.Router();
 
 router.post('/add', authMiddleware.authenticateJWT, bookingController.createBooking);
 router.get('/all', authMiddleware.authenticateJWT, bookingController.getAllBookings);
-// router.put('/update/:id', authMiddleware.authenticateJWT, bookingController.updateBooking);
-// router.delete('/delete/:id', authMiddleware.authenticateJWT, bookingController.deleteBooking);
 router.get('/:id', authMiddleware.authenticateJWT, bookingController.getBookingById);
 router.get('/user/:id', bookingController.getBookingbyUserId);
 router.post('/cancel/:id', authMiddleware.authenticateJWT, bookingController.cancelBooking);
-// router.get('/user/:id', authMiddleware.authenticateJWT, bookingController.getBookingbyUserId);
+router.post('/complete/:id', authMiddleware.authenticateJWT, bookingController.completeBooking);
 router.post('/create-by-location', authMiddleware.authenticateJWT, bookingController.createBookingByLocation);
+router.post('/calculate-price', bookingController.calculateBookingPrice);
+router.delete('/delete/:id', authMiddleware.authenticateJWT, bookingController.deleteBooking);
+router.post('/pay/:id', authMiddleware.authenticateJWT, bookingController.payBookingById);
 
 module.exports = router;

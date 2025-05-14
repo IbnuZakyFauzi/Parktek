@@ -206,17 +206,27 @@ exports.getParkingSlotsByLocation = async (req, res) => {
 }
 
 exports.getAvailableParkingSlotsByLocation = async (req, res) => {
-    const { location, start_time, end_time } = req.query;
+    const { location, start_time, end_time } = req.body;
 
     if (!location || !start_time || !end_time) {
         return res.status(400).json(baseResponse.error("Location, start time, and end time are required"));
     }
 
     try {
+        // Format the timestamps correctly
+        let formattedStartTime, formattedEndTime;
+        
+        try {
+            formattedStartTime = new Date(start_time).toISOString();
+            formattedEndTime = new Date(end_time).toISOString();
+        } catch (error) {
+            return res.status(400).json(baseResponse.error("Invalid date format"));
+        }
+
         const availableSlots = await parkingSlotRepo.getAvailableParkingSlotsByLocation(
             location, 
-            start_time, 
-            end_time
+            formattedStartTime, 
+            formattedEndTime
         );
         
         if (availableSlots.length === 0) {

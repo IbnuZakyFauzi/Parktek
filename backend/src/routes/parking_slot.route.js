@@ -8,9 +8,10 @@ router.get('/all', authMiddleware.authenticateJWT, parkingSlotController.getAllP
 router.put('/update/:id', authMiddleware.authenticateJWT, parkingSlotController.updateParkingSlot);
 router.delete('/delete/:id', authMiddleware.authenticateJWT, parkingSlotController.deleteParkingSlot);
 router.get('/available', parkingSlotController.countAvailableParkingSlots);
-router.get('/:id', parkingSlotController.getParkingSlotById);
+router.post('/available-by-location', parkingSlotController.getAvailableParkingSlotsByLocation);
 router.get('/location/:location', parkingSlotController.getParkingSlotsByLocation);
 router.get('/type/:type', parkingSlotController.getParkingSlotsByType);
-router.get('/available-by-location', parkingSlotController.getAvailableParkingSlotsByLocation);
+// Put the specific routes before the dynamic route with :id
+router.get('/:id', parkingSlotController.getParkingSlotById);
 
 module.exports = router;
