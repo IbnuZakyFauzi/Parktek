@@ -105,11 +105,12 @@ const Home = () => {
 
       {/* Learn more button */}
       <div className="text-center mt-16">
-        <button
+        <Link
+          to="/about"
           className="bg-color_blue1 text-white py-3 px-10 rounded-full text-lg font-medium hover:bg-blue-700 transition duration-300"
         >
           Learn PARKTEK
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -18,30 +18,28 @@ export default function NavBar() {
     return (
         <nav className="fixed top-0 left-0 w-full z-50 bg-white text-black py-4 shadow-md">
             <div className="flex justify-between items-center px-3 py-1">
-                {/* Logo and Navbar Links on the Left */}
+                {/* Ganti a href menjadi Link */}
                 <div className="flex items-center space-x-6">
-                    <a href="#home" onClick={(e) => scrollToSection(e, 'home')}>
-                        <Logo className="w-40 h-auto object-contain" /> {/* Menggunakan komponen Logo */}
-                    </a>
+                    <Link to="/" className="flex items-center">
+                        <Logo className="w-40 h-auto object-contain" />
+                    </Link>
 
                     <ul className="flex flex-row space-x-6 font-medium text-xl">
                         <li>
-                            <a
-                                href="#aboutus"
-                                onClick={(e) => scrollToSection(e, 'aboutus')}
+                            <Link
+                                to="/about"
                                 className="text-black hover:text-color_hover1 transition cursor-pointer"
                             >
                                 About Us
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
-                                href="#locations"
-                                onClick={(e) => scrollToSection(e, 'locations')}
+                            <Link
+                                to="/locations"
                                 className="text-black hover:text-color_hover1 transition cursor-pointer"
                             >
                                 Locations
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </div>

@@ -1,11 +1,11 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import NavBar from './components/Navbar';
 import Home from './pages/Home';
-import Footer from './components/Footer';
-
 import AboutUs from './pages/AboutUs';
-import Locations from './pages/Locations';
+import Footer from './components/Footer';
+import Locations from './pages/Locations'; // Pastikan import ini ada
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ParkingSlot from './pages/ParkingSlot';
@@ -20,8 +20,8 @@ function App() {
           {/* Routes setup */}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/aboutus" element={<AboutUs />} />
-            <Route path="/locations" element={<Locations />} />
+            <Route path="/about" element={<AboutUs />} /> {/* Sudah sama dengan Navbar */}
+            <Route path="/locations" element={<Locations />} /> {/* Pastikan baris ini ada */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/parkingslot" element={<ParkingSlot />} />
