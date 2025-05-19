@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
-import Logo from './Logo'; // Import komponen Logo
+import { Link, useNavigate } from 'react-router-dom'; // Tambahkan useNavigate
+import Logo from './Logo';
+import { useAuth } from '../contexts/AuthContext'; // Import useAuth hook
 
 export default function NavBar() {
+    const navigate = useNavigate();
+    const { currentUser, logout, isAuthenticated } = useAuth(); // Gunakan hook useAuth
+    
     const scrollToSection = (event, id) => {
         event.preventDefault();
 
@@ -13,6 +17,11 @@ export default function NavBar() {
                 el.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         }
+    };
+    
+    const handleLogout = () => {
+        logout();
+        navigate('/');
     };
 
     return (
@@ -41,23 +50,50 @@ export default function NavBar() {
                                 Locations
                             </Link>
                         </li>
+                        {/* Tambahkan menu Booking jika user sudah login */}
+                        {isAuthenticated && (
+                            <li>
+                                <Link
+                                    to="/parkingslot"
+                                    className="text-black hover:text-color_hover1 transition cursor-pointer"
+                                >
+                                    Booking
+                                </Link>
+                            </li>
+                        )}
                     </ul>
                 </div>
 
-                {/* Login and Registration Buttons on the Right */}
+                {/* Tampilkan tombol yang berbeda berdasarkan status login */}
                 <div className="flex space-x-4 items-center">
-                    <Link
-                        to="/login"
-                        className="text-black hover:text-color_hover1 transition cursor-pointer text-lg font-semibold flex items-center"
-                    >
-                        Login
-                    </Link>
-                    <Link
-                        to="/register"
-                        className="text-white bg-color_blue1 hover:bg-color_hover1 px-6 py-2 rounded-full text-lg font-semibold flex items-center transition"
-                    >
-                        Register
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <span className="text-black font-medium">
+                                Hello, {currentUser.name}
+                            </span>
+                            <button
+                                onClick={handleLogout}
+                                className="text-white bg-color_blue1 hover:bg-color_hover1 px-6 py-2 rounded-full text-lg font-semibold flex items-center transition"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                className="text-black hover:text-color_hover1 transition cursor-pointer text-lg font-semibold flex items-center"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                to="/register"
+                                className="text-white bg-color_blue1 hover:bg-color_hover1 px-6 py-2 rounded-full text-lg font-semibold flex items-center transition"
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

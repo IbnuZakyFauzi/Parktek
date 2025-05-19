@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '../services/api';
+import { useAuth } from '../contexts/AuthContext'; // Tambahkan import ini
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login: authLogin } = useAuth(); // Dapatkan login function dari context
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,14 +23,50 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login data:', formData, 'Remember me:', rememberMe);
-    // Implement login logic here
-  };
-
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  
+  try {
+    setLoading(true);
+    console.log('Attempting login with:', { email: formData.email });
+    
+    const response = await authService.login(formData);
+    console.log('Login successful:', response);
+    
+    // Store token in localStorage
+    localStorage.setItem('token', response.data.token);
+    
+    // Store user info if available and update auth context
+    if (response.data.user) {
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      authLogin(response.data.user); // Use the login function from context
+    }
+    
+    // Redirect to dashboard instead of home page
+    navigate('/dashboard'); // Mengubah navigasi ke halaman dashboard
+        
+  } catch (err) {
+    // Error handling code tetap sama
+    console.error('Login error:', err);
+    
+    if (err.response) {
+      console.error('Error response:', err.response.data);
+      setError(err.response.data.message || 'Invalid email or password');
+    } else if (err.request) {
+      console.error('Error request:', err.request);
+      setError('No response from server. Please try again later.');
+    } else {
+      console.error('Error message:', err.message);
+      setError('An error occurred during login.');
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+  
   return (
-    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+    <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50 min-h-screen">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
         <div>
           <h2 className="text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
@@ -36,9 +78,15 @@ const Login = () => {
           </p>
         </div>
         
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4">
+            <div className="text-red-700">{error}</div>
+          </div>
+        )}
+        
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md -space-y-px">
-            <div className="mb-4">
+          <div className="rounded-md space-y-4">
+            <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email address
               </label>
@@ -96,9 +144,10 @@ const Login = () => {
           <div>
             <button
               type="submit"
+              disabled={loading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-color_blue1 hover:bg-color_hover1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-color_blue1"
             >
-              Sign in
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
         </form>
