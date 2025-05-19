@@ -125,7 +125,7 @@ exports.calculateBookingPrice = async (req, res) => {
 
 // Create booking function with price calculation
 exports.createBooking = async (req, res) => {
-    const user_id = req.user.id;
+    const user_id = req.user.userId; // Fixed: use userId instead of id to match the JWT payload structure
     const { parking_slot_id, start_time, end_time } = req.body;
 
     if (!parking_slot_id || !start_time || !end_time) {
@@ -191,14 +191,29 @@ exports.createBooking = async (req, res) => {
             'pending',
             price
         );
-        
-        // Mark the parking slot as inactive (not available) while the booking is pending
+          // Mark the parking slot as inactive (not available) while the booking is pending
         await parkingSlotRepo.updateParkingSlot(parking_slot_id, {
             ...parkingSlot,
             is_active: false
         });
         
-        return res.status(201).json(baseResponse.success("Booking created successfully", newBooking));
+        try {
+            // Generate QR code and upload to Cloudinary
+            const qrService = require('../services/qrService');
+            const qrCodeUrl = await qrService.generateAndUploadQR(newBooking.id);
+            
+            // Update booking with QR code URL
+            const updatedBooking = await bookingRepo.updateQRUrl(newBooking.id, qrCodeUrl);
+            
+            // Return updated booking data with QR code URL
+            return res.status(201).json(baseResponse.success("Booking created successfully", updatedBooking));
+        } catch (qrError) {
+            // Log QR code generation error but don't fail the request
+            console.error("Error generating QR code:", qrError);
+            
+            // Still return the booking, even without QR code
+            return res.status(201).json(baseResponse.success("Booking created successfully, but QR generation failed", newBooking));
+        }
     } catch (error) {
         console.error("Error creating booking", error);
         return res.status(500).json(baseResponse.error("Internal server error"));
@@ -207,7 +222,7 @@ exports.createBooking = async (req, res) => {
 
 // Cancel booking now also updates parking slot availability
 exports.cancelBooking = async (req, res) => {
-    const user_id = req.user.id; // Fix: access user_id directly from req.user
+    const user_id = req.user.userId; // Fixed: use userId instead of id to match the JWT payload structure
     const { id } = req.params;
 
     try {
@@ -268,7 +283,7 @@ exports.completeBooking = async (req, res) => {
 
 // Create booking by location with price calculation
 exports.createBookingByLocation = async (req, res) => {
-    const user_id = req.user.id;
+    const user_id = req.user.userId; // Fixed: use userId instead of id to match the JWT payload structure
     const { location, type, start_time, end_time } = req.body;
 
     if (!location || !start_time || !end_time) {
@@ -343,8 +358,7 @@ exports.createBookingByLocation = async (req, res) => {
         
         // Business logic: Calculate price
         const price = calculatePrice(formattedStartTime, formattedEndTime);
-        
-        // Data operation: Create booking
+          // Data operation: Create booking
         const newBooking = await bookingRepo.createBookingWithPrice(
             user_id, 
             selectedSlot.id, 
@@ -360,10 +374,29 @@ exports.createBookingByLocation = async (req, res) => {
             is_active: false
         });
         
-        return res.status(201).json(baseResponse.success("Booking created successfully", {
-            ...newBooking,
-            parking_slot: selectedSlot
-        }));
+        try {
+            // Generate QR code and upload to Cloudinary
+            const qrService = require('../services/qrService');
+            const qrCodeUrl = await qrService.generateAndUploadQR(newBooking.id);
+            
+            // Update booking with QR code URL
+            const updatedBooking = await bookingRepo.updateQRUrl(newBooking.id, qrCodeUrl);
+            
+            // Return updated booking data with QR code URL
+            return res.status(201).json(baseResponse.success("Booking created successfully", {
+                ...updatedBooking,
+                parking_slot: selectedSlot
+            }));
+        } catch (qrError) {
+            // Log QR code generation error but don't fail the request
+            console.error("Error generating QR code:", qrError);
+            
+            // Still return the booking, even without QR code
+            return res.status(201).json(baseResponse.success("Booking created successfully, but QR generation failed", {
+                ...newBooking,
+                parking_slot: selectedSlot
+            }));
+        }
     } catch (error) {
         console.error("Error creating booking by location", error);
         return res.status(500).json(baseResponse.error("Internal server error"));
@@ -386,6 +419,45 @@ exports.deleteBooking = async (req, res) => {
         return res.status(500).json(baseResponse.error("Internal server error"));
     }
 }
+
+exports.getQRByBookingId = async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.userId; // Fixed: use userId instead of id to match the JWT payload structure
+
+    try {
+        // Find the booking
+        const booking = await bookingRepo.getBookingById(id);
+        
+        // If no booking found, return 404
+        if (!booking) {
+            return res.status(404).json(baseResponse.error("Booking not found"));
+        }
+        
+        // Check if the authenticated user owns the booking
+        if (booking.user_id !== userId) {
+            return res.status(403).json(baseResponse.error("Forbidden: Access denied"));
+        }
+          // Return the QR code URL in the specified format
+        return res.status(200).json({
+            qr_code_url: booking.qr_code_url
+        });
+    } catch (error) {
+        console.error("Error fetching booking QR code:", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+};
+
+exports.getCurrentUserBookings = async (req, res) => {
+    const userId = req.user.userId; // Fixed: use userId instead of id to match the JWT payload structure
+
+    try {
+        const bookings = await bookingRepo.getBookingByUserId(userId);
+        return res.status(200).json(baseResponse.success("User bookings fetched successfully", bookings));
+    } catch (error) {
+        console.error("Error fetching user bookings", error);
+        return res.status(500).json(baseResponse.error("Internal server error"));
+    }
+};
 
 exports.payBookingById = async (req, res) => {
     const { id } = req.params;

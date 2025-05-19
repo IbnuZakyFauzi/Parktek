@@ -5,8 +5,15 @@ const router = express.Router();
 
 router.post('/add', authMiddleware.authenticateJWT, bookingController.createBooking);
 router.get('/all', authMiddleware.authenticateJWT, bookingController.getAllBookings);
+<<<<<<< HEAD
 router.get('/:id', authMiddleware.authenticateJWT, bookingController.getBookingById);
 router.get('/user/:id', bookingController.getBookingbyUserId);
+=======
+router.get('/qr/:id', authMiddleware.authenticateJWT, bookingController.getQRByBookingId);
+router.get('/user', authMiddleware.authenticateJWT, bookingController.getCurrentUserBookings); // New route for current user bookings
+router.get('/user/:id', bookingController.getBookingbyUserId);
+router.get('/:id', authMiddleware.authenticateJWT, bookingController.getBookingById);
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
 router.post('/cancel/:id', authMiddleware.authenticateJWT, bookingController.cancelBooking);
 router.post('/complete/:id', authMiddleware.authenticateJWT, bookingController.completeBooking);
 router.post('/create-by-location', authMiddleware.authenticateJWT, bookingController.createBookingByLocation);

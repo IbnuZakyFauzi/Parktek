@@ -187,4 +187,21 @@ exports.updateSlotActiveStatus = async (slot_id, is_active) => {
         console.error("Error updating parking slot active status", error);
         throw error;
     }
+<<<<<<< HEAD
+=======
+}
+
+// To update the QR code URL for a booking
+exports.updateQRUrl = async (bookingId, qrCodeUrl) => {
+    try {
+        const result = await db.query(
+            "UPDATE bookings SET qr_code_url = $1 WHERE id = $2 RETURNING *",
+            [qrCodeUrl, bookingId]
+        );
+        return result.rows[0];
+    } catch (error) {
+        console.error("Error updating booking QR code URL", error);
+        throw error;
+    }
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
 }

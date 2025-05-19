@@ -4,6 +4,10 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/add', authMiddleware.authenticateJWT, parkingSlotController.addParkingSlot);
+<<<<<<< HEAD
+=======
+router.get('/', parkingSlotController.getAllParkingSlots); // Root path to get all slots for frontend
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
 router.get('/all', authMiddleware.authenticateJWT, parkingSlotController.getAllParkingSlots);
 router.put('/update/:id', authMiddleware.authenticateJWT, parkingSlotController.updateParkingSlot);
 router.delete('/delete/:id', authMiddleware.authenticateJWT, parkingSlotController.deleteParkingSlot);

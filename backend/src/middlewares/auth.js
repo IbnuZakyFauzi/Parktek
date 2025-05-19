@@ -12,7 +12,12 @@ exports.authenticateJWT = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+<<<<<<< HEAD
         req.user = { id: decoded.userId }; // Changed from decoded.id to decoded.userId
+=======
+        // Keep the same structure as in the JWT payload
+        req.user = { userId: decoded.userId };
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
         next();
     } catch (err) {
         console.error("JWT verification error:", err);

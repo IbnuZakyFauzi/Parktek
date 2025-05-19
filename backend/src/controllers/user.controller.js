@@ -53,9 +53,13 @@ exports.loginUser = async (req, res) => {
             { userId: user.id }, // hanya kirim userId, aman dan cukup
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
+<<<<<<< HEAD
         );
 
         // 5. Simpan di cookie (httpOnly)
+=======
+        );        // 5. Simpan di cookie (httpOnly)
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
         res.cookie("token", token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
@@ -63,8 +67,15 @@ exports.loginUser = async (req, res) => {
             maxAge: 3600000 // 1 jam
         });
 
+<<<<<<< HEAD
         // 6. Balas sukses perlu kirim token lagi
         return res.status(200).json(baseResponse.success("Login successful", { token, user }));
+=======
+        // 6. Balas sukses tanpa perlu kirim token lagi (token already in cookie)
+        // Return user info without password hash
+        const { password_hash, ...userWithoutPassword } = user;
+        return res.status(200).json(baseResponse.success("Login successful", { user: userWithoutPassword }));
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
     } catch (error) {
         console.error("Error logging in user", error);
         return res.status(500).json(baseResponse.error("Internal server error"));
@@ -139,7 +150,12 @@ exports.deleteUser = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
     console.log("User in request:", req.user);
+<<<<<<< HEAD
     const userId = req.user.id;
+=======
+    // Fix: Access userId property instead of id
+    const userId = req.user.userId;
+>>>>>>> ed0b973 (added frontend, already integrated, many error)
 
     try {
         console.log("Looking up user with ID:", userId);
